@@ -1,0 +1,8 @@
+[submodule "src/vicon_bridge"]
+	path = src/vicon_bridge
+	url = git@github.com:ethz-asl/vicon_bridge.git
+	branch = master
+[submodule "src/robot_pose_ekf"]
+	path = src/robot_pose_ekf
+	url = git@github.com:akumaraguru/robot_pose_ekf.git
+	branch = kinetic-devel

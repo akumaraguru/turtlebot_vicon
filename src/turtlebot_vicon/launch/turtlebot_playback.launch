@@ -1,0 +1,8 @@
+<launch>
+	<arg name="bagfile" default="$(find turtlebot_vicon)/bag/test_tb3.bag" />
+
+	<rosparam command="load" file="$(find turtlebot_vicon)/params.yaml" />
+
+    <node pkg="tf" type="static_transform_publisher" name="world_to_odom_broadcaster" args="0 0 0 0 0 0 1 world odom 100" />
+    <node pkg="rosbag" type="play" name="turtlebot_player" output="screen" args="--clock $(arg bagfile)"/>
+</launch>
