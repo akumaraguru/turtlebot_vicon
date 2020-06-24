@@ -6,3 +6,7 @@
 	path = src/robot_pose_ekf
 	url = git@github.com:akumaraguru/robot_pose_ekf.git
 	branch = kinetic-devel
+[submodule "src/odom_to_trajectory"]
+	path = src/odom_to_trajectory
+	url = git@github.com:udacity/odom_to_trajectory.git
+	branch = master
