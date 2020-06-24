@@ -1,13 +1,45 @@
 <launch>
     <arg name="bagfile" default="test_tb3.bag" />
-
     <rosparam command="load" file="$(find turtlebot_vicon)/params.yaml" />
 
-    <node pkg="rosbag" type="play" name="turtlebot_player" output="screen" args="--clock $(find turtlebot_vicon)/bag/$(arg bagfile)"/>
+    <!-- Bagfile playback + EKF -->
+    <node
+        name="turtlebot_player"
+        pkg="rosbag"
+        type="play"
+        output="screen"
+        args="--clock $(find turtlebot_vicon)/bag/$(arg bagfile)"
+    />
     <node name="covariance_adder" pkg="turtlebot_vicon" type="covariance_adder.py" />
     <include file="$(find robot_pose_ekf)/robot_pose_ekf.launch" />
-    <node pkg="tf" type="static_transform_publisher" name="world_to_odom_broadcaster" args="0 0 0 0 0 0.7071068 0.7071068 world odom 100" />
-    <!-- <node pkg="tf" type="static_transform_publisher" name="world_to_odom_combined_broadcaster" args="0 0 0 0 0 0 1 world odom_combined 100" /> -->
+
+    <!-- Vicon origin is rotated 90 degrees from odom along z-axis -->
+    <node
+        name="world_to_odom_broadcaster"
+        pkg="tf"
+        type="static_transform_publisher"
+        args="0 0 0 0 0 0.7071068 0.7071068 world odom 100"
+    />
+    <!-- <node
+        pkg="tf"
+        type="static_transform_publisher"
+        name="world_to_odom_combined_broadcaster"
+        args="0 0 0 0 0 0.7071068 0.7071068 world odom_combined 100"
+    /> -->
     <include file="$(find odom_to_trajectory)/launch/create_trajectory.launch" />
-    <node type="rviz" name="rviz" pkg="rviz" args="-d $(find turtlebot_vicon)/rviz/turtlebot_visualization.rviz" />
+
+    <!-- Visualize and record -->
+    <node
+        name="rviz"
+        pkg="rviz"
+        type="rviz"
+        args="-d $(find turtlebot_vicon)/rviz/turtlebot_visualization.rviz"
+    />
+    <!-- <node
+        name="pose_recorder"
+        pkg="turtlebot_vicon"
+        type="pose_recorder.py"
+        args="&#45;&#45;ekf-csv $(find turtlebot_vicon)/csv/ekf-$(arg bagfile).csv &#45;&#45;vicon-csv $(find turtlebot_vicon)/csv/vicon-$(arg bagfile).csv"
+    /> -->
+    
 </launch>

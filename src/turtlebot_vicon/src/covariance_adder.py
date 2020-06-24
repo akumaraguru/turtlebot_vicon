@@ -5,14 +5,14 @@ import rospy
 from nav_msgs.msg import Odometry
 
 
-COV_VAL = 1e-2
+COV_VAL = [1e-2] * 6
 COV_IDX = [0, 7, 14, 21, 28, 35]
 
 def odom_cb(pub, data):
     odom_w_cov = deepcopy(data)
     pose_cov = list(odom_w_cov.pose.covariance)
-    for i in COV_IDX:
-        pose_cov[i] += COV_VAL
+    for i, idx in enumerate(COV_IDX):
+        pose_cov[idx] += COV_VAL[i]
     odom_w_cov.pose.covariance = tuple(pose_cov)
     pub.publish(odom_w_cov)
     # rospy.loginfo(
