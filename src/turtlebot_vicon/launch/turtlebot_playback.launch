@@ -35,11 +35,11 @@
         type="rviz"
         args="-d $(find turtlebot_vicon)/rviz/turtlebot_visualization.rviz"
     />
-    <!-- <node
+    <node
         name="pose_recorder"
         pkg="turtlebot_vicon"
         type="pose_recorder.py"
         args="&#45;&#45;ekf-csv $(find turtlebot_vicon)/csv/ekf-$(arg bagfile).csv &#45;&#45;vicon-csv $(find turtlebot_vicon)/csv/vicon-$(arg bagfile).csv"
-    /> -->
+    />
     
 </launch>

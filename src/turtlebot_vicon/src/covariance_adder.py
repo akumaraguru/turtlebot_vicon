@@ -5,7 +5,7 @@ import rospy
 from nav_msgs.msg import Odometry
 
 
-COV_VAL = [1e-2] * 6
+COV_VAL = [1e-1] * 6
 COV_IDX = [0, 7, 14, 21, 28, 35]
 
 def odom_cb(pub, data):
